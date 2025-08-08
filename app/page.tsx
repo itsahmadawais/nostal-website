@@ -5,13 +5,13 @@ import Header from "./_components/header";
 const ComingSoonPage = () => {
   return (
     <div className="min-h-screen bg-black relative text-white overflow-hidden">
-      {/* Radial Gradient (wide and circular, from top to center) */}
-      <div className="absolute top-[-50%] left-1/2 transform -translate-x-1/2 w-[200%] h-[200%] pointer-events-none">
-        <div className="w-full h-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_60%)]" />
+      {/* Radial Gradient (smaller, brighter, from top to center) */}
+      <div className="absolute top-[-25%] left-1/2 transform -translate-x-1/2 w-[120%] h-[120%] pointer-events-none">
+        <div className="w-full h-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_40%)]" />
       </div>
 
       {/* Header */}
-      <Header/>
+      <Header />
 
       {/* Main Content */}
       <main className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24">
@@ -32,7 +32,7 @@ const ComingSoonPage = () => {
         <h1 className="text-[#a6a6a6] font-sans text-4xl md:text-6xl mb-6">Coming soon...</h1>
 
         {/* Paragraph */}
-        <p className="text-lg md:text-lg font-poppins max-w-xl text-white/80">
+        <p className="text-lg md:text-xl font-poppins max-w-xl text-white/80 tracking-normal">
           Join Nostal — the first Web3-powered social app where your posts pay. Drop content,
           bring your crew, and earn rewards while you scroll.
         </p>

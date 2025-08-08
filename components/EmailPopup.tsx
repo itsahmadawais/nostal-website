@@ -7,17 +7,34 @@ export default function EmailPopup() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    // TODO: Send email to API
-    setSubmitted(true);
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        alert(error || "Failed to subscribe");
+        return;
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      alert("An error occurred. Please try again.");
+    }
   };
+
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-white/10 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-md">
       {/* Glassmorphic overlay → bg-white/10 with backdrop-blur */}
       <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-black shadow-2xl">
         <div className="flex justify-between items-center mb-4">
