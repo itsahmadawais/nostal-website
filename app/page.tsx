@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Header from "./_components/header";
+import MobilePopup from "./_components/mobil-popup";
 
 const ComingSoonPage = () => {
   return (
@@ -32,10 +33,14 @@ const ComingSoonPage = () => {
         <h1 className="text-[#a6a6a6] font-sans text-4xl md:text-6xl mb-6">Coming soon...</h1>
 
         {/* Paragraph */}
-        <p className="text-lg md:text-xl font-poppins max-w-xl text-white/80 tracking-normal">
+        <p className="text-white text-md md:text-xl font-poppins max-w-xl text-white/80 tracking-normal">
           Join Nostal — the first Web3-powered social app where your posts pay. Drop content,
           bring your crew, and earn rewards while you scroll.
         </p>
+        {/* Mobile Button */}
+        <div className="md:hidden mt-20">
+          <MobilePopup />
+        </div>
       </main>
     </div>
   );

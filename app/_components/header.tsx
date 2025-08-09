@@ -1,16 +1,29 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import EmailPopup from '@/components/EmailPopup'
+import React, { useState, useEffect } from 'react'
+import { FaShare, FaCopy, FaEnvelope } from 'react-icons/fa6'
 
 export default function Header() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [isPopupOpen, setIsPopupOpen] = useState(false)
+    const [isShareOpen, setIsShareOpen] = useState(false)
+    const [shareUrl, setShareUrl] = useState('https://nostal.app')
+    const [copied, setCopied] = useState(false)
 
-    const handlePopupVisibility = () => {
-        setIsMenuOpen(false)
-        setIsPopupOpen(!isPopupOpen)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setShareUrl(window.location.href)
+        }
+    }, [])
+
+    const shareTitle = 'Join Nostal — the first Web3-powered social app where your posts pay!'
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(shareUrl)
+            setCopied(true)
+            setTimeout(() => setCopied(false), 2000)
+        } catch {
+            alert('Failed to copy link')
+        }
     }
 
     return (
@@ -24,42 +37,66 @@ export default function Header() {
 
                 {/* Desktop Button */}
                 <div className="hidden md:block">
-                    <button className="bg-white cursor-pointer text-black px-5 py-2 cursor-pointer rounded-full hover:bg-gray-200 transition" onClick={handlePopupVisibility}>
+                    <button className="bg-white cursor-pointer text-black px-5 py-2 rounded-full hover:bg-gray-200 transition">
                         Join Waitlist
                     </button>
                 </div>
 
-                {/* Mobile Hamburger */}
-                <div className="md:hidden relative">
+                {/* Mobile Share Button */}
+                <div className="md:hidden">
                     <button
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="text-black cursor-pointer focus:outline-none"
-                        aria-label="Open Menu"
+                        onClick={() => setIsShareOpen(true)}
+                        className="flex gap-2 items-center bg-[#f1f1f1] text-black px-4 py-2 rounded-full hover:bg-gray-200 transition"
+                        aria-label="Share"
                     >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                        <FaShare />
+                        Share
                     </button>
-
-                    {/* Mobile Menu with Animation */}
-                    <AnimatePresence>
-                        {isMenuOpen && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.2 }}
-                                className="absolute right-0 mt-2 bg-white text-black w-48 px-6 py-4 rounded-md shadow-lg z-50"
-                            >
-                                <button className="block cursor-pointer w-full text-center bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition" onClick={handlePopupVisibility}>
-                                    Join Waitlist
-                                </button>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
             </div>
-            { isPopupOpen && <EmailPopup/>}
+
+            {/* Fullscreen Share Popup */}
+            {isShareOpen && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-md"
+                    onClick={() => setIsShareOpen(false)} // Close on overlay click
+                    aria-modal="true"
+                    role="dialog"
+                >
+                    <div
+                        className="bg-white/10 backdrop-blur rounded-2xl p-6 max-w-sm w-full text-white shadow-2xl flex flex-col items-center gap-6"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h2 className="text-xl font-semibold mb-2">Share Nostal</h2>
+
+                        <div className="flex justify-center gap-12 w-full">
+                            {/* Email link */}
+                            <a
+                                href={`mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareUrl)}`}
+                                onClick={() => setIsShareOpen(false)}
+                                className="flex flex-col items-center cursor-pointer hover:text-gray-300 transition"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <FaEnvelope size={48} />
+                                <span className="mt-2 text-base font-medium">Email</span>
+                            </a>
+
+                            {/* Copy Link Button */}
+                            <button
+                                onClick={handleCopy}
+                                className="flex flex-col items-center cursor-pointer hover:text-gray-300 transition focus:outline-none"
+                                aria-label="Copy link"
+                                type="button"
+                            >
+                                <FaCopy size={48} />
+                                <span className="mt-2 text-base font-medium">{copied ? 'Copied!' : 'Copy Link'}</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            )}
         </header>
     )
 }
