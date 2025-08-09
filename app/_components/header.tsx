@@ -67,7 +67,7 @@ export default function Header() {
                         className="bg-white/10 backdrop-blur rounded-2xl p-6 max-w-sm w-full text-white shadow-2xl flex flex-col items-center gap-6"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-xl font-semibold mb-2">Share Nostal</h2>
+                        <h2 className="text-xl font-semibold mb-2 font-poppins">Share Nostal</h2>
 
                         <div className="flex justify-center gap-12 w-full">
                             {/* Email link */}
