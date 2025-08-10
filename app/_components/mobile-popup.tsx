@@ -11,7 +11,7 @@ export default function MobilePopup() {
 
     return (
         <>
-            <button className="bg-white cursor-pointer text-black text-sm px-10 py-3 cursor-pointer rounded-full hover:bg-gray-200 transition font-sans" onClick={handlePopupVisibility}>
+            <button className="bg-white cursor-pointer text-black text-sm px-12 py-4 cursor-pointer rounded-full hover:bg-gray-200 transition font-sans" onClick={handlePopupVisibility}>
                 Join Waitlist
             </button>
             {isPopupOpen && <EmailPopup />}

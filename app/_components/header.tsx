@@ -1,5 +1,6 @@
 'use client'
 
+import EmailPopup from '@/components/EmailPopup'
 import React, { useState, useEffect } from 'react'
 import { FaShare, FaCopy, FaEnvelope } from 'react-icons/fa6'
 
@@ -7,6 +8,8 @@ export default function Header() {
     const [isShareOpen, setIsShareOpen] = useState(false)
     const [shareUrl, setShareUrl] = useState('https://nostal.app')
     const [copied, setCopied] = useState(false)
+    const [isPopupOpen, setIsPopupOpen] = useState(false)
+
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -26,6 +29,10 @@ export default function Header() {
         }
     }
 
+    const handlePopupVisibility = () => {
+        setIsPopupOpen(!isPopupOpen)
+    }
+
     return (
         <header className="relative z-50 md:px-6 md:py-4">
             <div className="max-w-6xl mx-auto flex items-center bg-white md:bg-transparent justify-between border-b border-white/10 px-4 md:px-0 py-6 md:py-0 md:pb-4 relative">
@@ -37,7 +44,7 @@ export default function Header() {
 
                 {/* Desktop Button */}
                 <div className="hidden md:block">
-                    <button className="bg-white cursor-pointer text-black px-5 py-2 rounded-full hover:bg-gray-200 transition">
+                    <button className="bg-white cursor-pointer text-black px-5 py-2 rounded-full hover:bg-gray-200 transition" onClick={handlePopupVisibility}>
                         Join Waitlist
                     </button>
                 </div>
@@ -97,6 +104,7 @@ export default function Header() {
                     </div>
                 </div>
             )}
+            {isPopupOpen && <EmailPopup />}
         </header>
     )
 }
