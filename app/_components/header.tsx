@@ -44,7 +44,7 @@ export default function Header() {
 
                 {/* Desktop Button */}
                 <div className="hidden md:block">
-                    <button className="bg-white cursor-pointer text-black px-5 py-2 rounded-full hover:bg-gray-200 transition" onClick={handlePopupVisibility}>
+                    <button className="bg-white cursor-pointer text-black font-[500] font-sans px-5 py-2 rounded-full hover:bg-gray-200 transition" onClick={handlePopupVisibility}>
                         Join Waitlist
                     </button>
                 </div>
